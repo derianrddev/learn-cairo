@@ -2,8 +2,8 @@
 pub trait ICounter<TContractState> {
     fn get_counter(self: @TContractState) -> u32;
     fn increase_counter(ref self: TContractState);
+    fn decrease_counter(ref self: TContractState);
 }
-
 
 #[starknet::contract]
 pub mod CounterContract {
@@ -26,6 +26,11 @@ pub mod CounterContract {
         fn increase_counter(ref self: ContractState) {
             let counter = self.counter.read();
             self.counter.write(counter + 1);
+        }
+
+        fn decrease_counter(ref self: ContractState) {
+            let counter = self.counter.read();
+            self.counter.write(counter - 1);
         }
     }
 }
