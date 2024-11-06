@@ -29,7 +29,7 @@ pub mod CounterContract {
     }
 
     #[abi(embed_v0)]
-    impl Counter of super::ICounter<ContractState> {
+    impl CounterImpl of super::ICounter<ContractState> {
         fn get_counter(self: @ContractState) -> u32 {
             self.counter.read()
         }
