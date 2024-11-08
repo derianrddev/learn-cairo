@@ -9,6 +9,17 @@ fn OWNER() -> ContractAddress {
 }
 
 #[test]
+fn test_constructor() {
+    start_cheat_caller_address_global(OWNER());
+    let (contract_address, task_class_hash) = deploy_contract();
+    let to_do_list_contract = IToDoListDispatcher { contract_address };
+    let expected_task_address = to_do_list_contract.get_task_class_hash();
+    let owner = to_do_list_contract.get_owner();
+    assert(owner == OWNER(), 'Invalid owner');
+    assert(task_class_hash == expected_task_address, 'Invalid task class hash');
+}
+
+#[test]
 fn test_add_task() {
     start_cheat_caller_address_global(OWNER());
     let (contract_address, task_class_hash) = deploy_contract();
