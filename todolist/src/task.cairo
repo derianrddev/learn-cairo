@@ -2,7 +2,9 @@
 pub trait ITask<TContractState> {
     fn get_id(self: @TContractState) -> u64;
     fn get_description(self: @TContractState) -> felt252;
+    fn set_description(ref self: TContractState, description: felt252);
     fn get_completed(self: @TContractState) -> bool;
+    fn set_completed(ref self: TContractState, completed: bool);
 }
 
 #[starknet::contract]
@@ -29,8 +31,14 @@ pub mod TaskContract {
         fn get_description(self: @ContractState) -> felt252 {
             return self.description.read();
         }
+        fn set_description(ref self: ContractState, description: felt252) {
+            self.description.write(description);
+        }
         fn get_completed(self: @ContractState) -> bool {
             return self.completed.read();
+        }
+        fn set_completed(ref self: ContractState, completed: bool) {
+            self.completed.write(completed);
         }
     }
 }
