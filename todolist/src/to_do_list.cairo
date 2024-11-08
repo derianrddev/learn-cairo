@@ -48,7 +48,7 @@ pub mod ToDoListContract {
             return self.current_id.read();
         }
         fn get_task(self: @ContractState, id: u64) -> ContractAddress {
-            return self.tasks.read(id);
+            return self.tasks.entry(id).read();
         }
         fn get_owner(self: @ContractState) -> ContractAddress {
             return self.owner.read();
