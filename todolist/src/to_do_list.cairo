@@ -2,7 +2,7 @@ use starknet::{ContractAddress, ClassHash};
 
 #[starknet::interface]
 pub trait IToDoList<TContractState> {
-    fn add_task(ref self: TContractState, description: felt252);
+    fn add_task(ref self: TContractState, description: ByteArray);
     fn get_current_id(self: @TContractState) -> u64;
     fn get_task(self: @TContractState, id: u64) -> ContractAddress;
     fn get_owner(self: @TContractState) -> ContractAddress;
@@ -33,7 +33,7 @@ pub mod ToDoListContract {
 
     #[abi(embed_v0)]
     impl ToDoList of super::IToDoList<ContractState> {
-        fn add_task(ref self: ContractState, description: felt252) {
+        fn add_task(ref self: ContractState, description: ByteArray) {
             let mut call_data: Array<felt252> = array![];
             Serde::serialize(@self.current_id.read(), ref call_data);
             Serde::serialize(@description, ref call_data);

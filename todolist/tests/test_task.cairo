@@ -7,8 +7,11 @@ use todolist::task::{ITaskDispatcher, ITaskDispatcherTrait};
 fn ID() -> u64 {
     1
 }
-fn DESCRIPTION() -> felt252 {
-    'Learn Cairo'
+fn DESCRIPTION() -> ByteArray {
+    "Learn Cairo"
+}
+fn COMPLETED() -> ByteArray {
+    "Learn Cairo"
 }
 
 fn deploy_contract() -> ContractAddress {
@@ -30,4 +33,15 @@ fn test_constructor() {
     assert(id == ID(), 'Invalid ID');
     assert(description == DESCRIPTION(), 'Invalid description');
     assert(completed == false, 'Invalid completed');
+}
+
+#[test]
+fn test_set_description() {
+    let contract_address = deploy_contract();
+    let task = ITaskDispatcher { contract_address };
+    let description = task.get_description();
+    assert(description == DESCRIPTION(), 'Invalid description');
+    task.set_description("Learn Next.js");
+    let new_description = task.get_description();
+    assert(new_description == "Learn Next.js", 'set_description method not work')
 }

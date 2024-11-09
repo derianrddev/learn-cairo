@@ -10,8 +10,8 @@ use todolist::to_do_list::{IToDoListDispatcher, IToDoListDispatcherTrait};
 fn ID() -> u64 {
     1
 }
-fn DESCRIPTION() -> felt252 {
-    'Learn Cairo'
+fn DESCRIPTION() -> ByteArray {
+    "Learn Cairo"
 }
 fn OWNER() -> ContractAddress {
     contract_address_const::<'OWNER'>()
@@ -49,7 +49,7 @@ fn test_add_task() {
     start_cheat_caller_address_global(OWNER());
     let (contract_address, task_class_hash) = deploy_contract();
     let to_do_list = IToDoListDispatcher { contract_address };
-    to_do_list.add_task('Learn NextJS');
+    to_do_list.add_task("Learn NextJS");
     let expected_task_class_hash = get_class_hash(to_do_list.get_task(1));
     let current_id = to_do_list.get_current_id();
     assert(expected_task_class_hash == task_class_hash, 'Invalid task address');
