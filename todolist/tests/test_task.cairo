@@ -45,3 +45,14 @@ fn test_set_description() {
     let new_description = task.get_description();
     assert(new_description == "Learn Next.js", 'set_description method not work')
 }
+
+#[test]
+fn test_set_completed() {
+    let contract_address = deploy_contract();
+    let task = ITaskDispatcher { contract_address };
+    let completed = task.get_completed();
+    assert(completed == false, 'Invalid completed');
+    task.set_completed(true);
+    let new_completed = task.get_completed();
+    assert(new_completed == true, 'set_completed method not work')
+}
